@@ -1,0 +1,21 @@
+Sorokin:
+    type: Web
+    title: "Введение в роевой интеллект: теория, расчеты и приложения"
+    author: Сорокин А.Б.
+    publisher: Московский технологический университет (МИРЭА)
+    location: Москва
+    page-total: 768
+    date: 2019
+    language: ru
+
+Rastrigin:
+    type: web
+    title: "Введение в роевой интеллект: теория, расчеты и приложения"
+    access: { URL: https://ru.wikipedia.org/wiki/Функция_Растригина, date: 2024-11-01}
+    language: ru
+
+Karpenko:
+    type: book
+    title: "Современные алгоритмы поисковой оптимизации. Алгоритмы, вдохновленные природой: учебное пособие"
+    author: 
+    - Карпенко А.П.
