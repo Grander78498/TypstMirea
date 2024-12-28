@@ -9,8 +9,6 @@
   doc
 }
 
-#let lb = linebreak(justify: true)
-
 #let print_symbols(..args) = {
   v(-10pt)
   h(-1.25cm)
@@ -37,6 +35,8 @@
 }
 
 #let eq-simple(eq) = {
+  set par(leading: 8pt)
+  set block(breakable: true)
   math.equation(eq, block: true, numbering: none)
 }
 
@@ -174,7 +174,7 @@
   set math.equation(numbering: num => {
     let arr = counter(heading).get()
     if arr.len() >= 2 {
-      numbering("(1.1.1)", ..arr.slice(0, 1), num)
+      numbering("(1.1.1)", ..arr.slice(0, 2), num)
     }
     else {
       numbering("(1.1.1)", ..arr, num)
@@ -187,20 +187,15 @@
     let arr = counter(heading).get()
     it.body
     set text(size: 12pt, weight: "black")
+    set par(leading: 4pt, justify: false)
     v(-12pt)
     [
-      Рисунок #arr.slice(0, arr.len()).map(str).join(".").#counter(figure.where(kind: image)).get().first() --- #it.caption
+      Рисунок #arr.slice(0, 2).map(str).join(".").#counter(figure.where(kind: image)).get().first() --- #it.caption
     ]
   }
   show figure.where(kind: table): it => {
-    let arr = counter(heading).get()
-    set text(size: 12pt)
-    align(left, h(-1.25cm) + emph[
-      Таблица #arr.slice(0, arr.len()).map(str).join(".").#counter(figure.where(kind: table)).get().first() --- #it.caption
-    ])
-    v(-10pt)
-    it.body
-    v(-20pt)
+    it
+    v(-12pt)
     h(1.25cm)
   }
   show figure.where(kind: table, supplement: [Листинг]): it => {
@@ -218,12 +213,12 @@
     } else if it.element != none and it.element.body.func() == image {
       context {
         let arr = counter(heading).at(it.target)
-        link(it.target)[#arr.slice(0, arr.len()).map(str).join(".").#counter(figure.where(kind: image)).at(it.target).first()]
+        link(it.target)[#arr.slice(0, 2).map(str).join(".").#counter(figure.where(kind: image)).at(it.target).first()]
       }
     } else if it.element != none and it.element.body.func() == table {
       context {
         let arr = counter(heading).at(it.target)
-        link(it.target)[#arr.slice(0, arr.len()).map(str).join(".").#counter(figure.where(kind: table)).at(it.target).first()]
+        link(it.target)[#arr.slice(0, 2).map(str).join(".").#counter(figure.where(kind: table)).at(it.target).first()]
       }
     } else {
       it
@@ -234,6 +229,7 @@
     set text(font: "Cambria Math")
     v(14pt)
     it
+    v(-6pt)
     h(1.25cm)
   }
   
@@ -241,7 +237,7 @@
 }
 
 
-#let next-page-table(next-page-content: [], label-name, ..table-args) = context {
+#let next-page-code(next-page-content: [], label-name, ..table-args) = context {
   show figure.where(kind: table): set block(breakable: true)
   show figure.where(kind: table): set figure(caption: none)
   show figure.where(kind: table): it => {
@@ -276,17 +272,17 @@
       }
       else {
         v(-6pt)
-        emph(next-page-content.at(2))
+        emph(next-page-content.last())
       }
     }
   }
-
   [#figure(table(
     table.header(
       // The 'next page' content spans all columns and has no stroke
       // Must be selectable by the show rule above which hides it at the last page
       table.cell(colspan: column-amount, stroke: none, [#next-page-content <table-header>])
     ),
+    columns: (1fr, ),
     ..table-args,
     stroke: luma(50%),
   ), supplement: [Листинг]) #if label-name != none {label-name}]
@@ -295,14 +291,75 @@
   v(-measure(next-page-content.last()).height)
 }
 
+#let next-page-table(next-page-content: [], label-name, ..table-args) = context {
+  set text(size: 12pt)
+  show figure.where(kind: table): set block(breakable: true)
+  show figure.where(kind: table): set figure(caption: none)
+  show figure.where(kind: table): it => {
+    align(left, it);
+  }
+
+  let columns = table-args.named().at("columns", default: 1)
+  let column-amount = if type(columns) == int {
+    columns
+  } else if type(columns) == array {
+    columns.len()
+  } else {
+    1
+  }
+
+  let table-counter = counter("table")
+  table-counter.step()
+
+  let arr = counter(heading).get()
+  let table-part-counter = counter("table-part" + str(arr.slice(0, 2).map(str).join(".")) + str(table-counter.get().first()))
+  show <table-header>: _ => {
+    table-part-counter.step()
+    set text(font: "Times New Roman", size: 12pt)
+    context {
+      if table-part-counter.get().first() == 1 {
+        emph(next-page-content.at(0))
+      }
+      else if table-part-counter.get() != table-part-counter.final() {
+        v(-6pt)
+        emph(next-page-content.at(1))
+      }
+      else {
+        v(-6pt)
+        emph(next-page-content.last())
+      }
+    }
+  }
+  [#figure(table(
+    table.header(table.cell(table(
+      table.cell(colspan: 1, stroke: none, inset: (bottom: -6pt, top: 0pt, left: -6pt), align: left, [#next-page-content <table-header>])
+    ), stroke: none)),
+    columns: (1fr),
+    table.cell(..table-args, stroke: none, align: center),
+  ), supplement: [Таблица]) #if label-name != none {label-name}]
+  v(-measure(next-page-content.last()).height)
+}
+
 #let simple-code(code-content, name, label: none) = {
   context [
     #let num = appendix-num(counter(heading).get().at(3)) + "." + str(counter("code").get().first() + 1)
-  #next-page-table(
-    next-page-content: ("Листинг " + num + h(6pt) + sym.dash.em + h(6pt) + name, "Продолжение Листинга " + num, "Окончание Листинга " + num),
-    columns: 1,
+  #next-page-code(
+    next-page-content: ([Листинг #num --- #name], [Продолжение Листинга #num], [Окончание Листинга #num]),
     label,
     code-content
+  )
+  ]
+}
+
+#let simple-table(columns: none, name: "", label: none, header: none, ..table-content) = {
+  v(-6pt)
+  context [
+    #let arr = counter(heading).get()
+    #let num = arr.slice(0, 2).map(str).join(".") + "." + str(counter("table").get().first() + 1)
+  #next-page-table(
+    next-page-content: ([Таблица #num --- #name], [Продолжение Таблицы #num]),
+    label,
+    table(align: center, columns: if columns == none {header.len()} else {columns}, table.header(..header.map(text.with(weight: "bold")), repeat: false), ..table-content)
   )
   ]
 }
