@@ -10,15 +10,13 @@
 }
 
 #let print_symbols(..args) = {
-  v(-10pt)
-  h(-1.25cm)
-  "где"
+  [#h(-1.25cm) где]
   context {
     h(1.25cm - measure("где").width)
   }
   v(-26pt)
   for (i, arg) in args.pos().enumerate() {
-    let res = arg.at(0) + h(7pt) + sym.dash.em + h(7pt) + arg.at(1);
+    let res = [#arg];
     if i == args.pos().len() - 1 {
       res += "."
     }
@@ -45,6 +43,7 @@
   counter(heading.where(level: 4)).update(0)
 }
 
+
 #let template(doc) = {
   set par(first-line-indent: 1.25cm, justify: true, leading: 14pt)
   show raw: it => {
@@ -69,25 +68,24 @@
     show figure.caption: set text(size: 12pt)
     par([#it.caption #rect(width: 100%, stroke: luma(50%), [#it.body])])
   }
+  show heading: set block(sticky: true)
   show heading: it => {
-    if it.outlined {
+    if it.numbering != none {
+      v(-14pt)
       h(1.25cm)
-      v(-24pt)
       context {
         let arr = counter(heading).get()
         if it.numbering == none {
-          par(align(center, it.body), justify: true)
+          par(align(center, it.body))
         } else {
           par(align(left, [#arr.map(str).join(".") #it.body]), first-line-indent: 1.25cm, justify: true)
         }
       }
-      h(1.25cm)
-      v(-12pt)
     }
     else {
       align(center, it)
-      v(24pt)
     }
+    v(12pt)
   }
   set heading(numbering: "1.1")
   show heading.where(level: 1): it => {
@@ -96,21 +94,25 @@
     if it.body != [Приложения] {
       pagebreak()
     }
-    upper(text(it, size: 18pt))
+    //if it.numbering != none { v(-12pt) }
+    block(upper(text(it, size: 18pt)), sticky: true)
+    h(1.25cm)
+    v(-14pt)
   }
   show heading.where(level: 2): it => {
+    v(30pt, weak: true)
     counter(math.equation).update(0)
     counter(figure.where(kind: image)).update(0)
-    v(18pt)
-    it
+    block(text(it, size: 16pt), sticky: true)
+    h(1.25cm)
+    v(-14pt)
   }
   show heading.where(level: 3): it => {
-    v(18pt)
-    it
+    v(30pt, weak: true)
+    block(it, sticky: true)
+    h(1.25cm)
+    v(-14pt)
   }
-  // show heading.where(level: 4): set heading(
-  //   outlined: false
-  // )
   show heading.where(level: 4): it => {
     pagebreak()
     counter(heading.where(level: 4)).step()
@@ -158,7 +160,7 @@
       context {
         let app-num = counter(heading.where(level: 4)).get().first()
         counter(heading.where(level: 4)).step()
-        link(query(heading.where(level: 4)).at(app-num).location())[Приложение #appendix-num(app-num + 1) --- #it.element.body]
+        link(query(heading.where(level: 4)).at(app-num).location())[Приложение #appendix-num(app-num + 1) --- #it.element.body.]
       }
     }
   }
@@ -171,6 +173,7 @@
     it
     counter(heading.where(level: 1)).update(0)
   }
+  show math.equation: set block(breakable: true)
   set math.equation(numbering: num => {
     let arr = counter(heading).get()
     if arr.len() >= 2 {
@@ -192,10 +195,11 @@
     [
       Рисунок #arr.slice(0, 2).map(str).join(".").#counter(figure.where(kind: image)).get().first() --- #it.caption
     ]
+    v(-6pt)
   }
   show figure.where(kind: table): it => {
     it
-    v(-12pt)
+    v(-1em)
     h(1.25cm)
   }
   show figure.where(kind: table, supplement: [Листинг]): it => {
@@ -227,9 +231,8 @@
   show math.equation.where(block: true): it => {
     set block(breakable: true)
     set text(font: "Cambria Math")
-    v(14pt)
+    v(24pt)
     it
-    v(-6pt)
     h(1.25cm)
   }
   
@@ -264,14 +267,15 @@
     set text(font: "Times New Roman", size: 12pt)
     context {
       if table-part-counter.get().first() == 1 {
+        v(0.5em)
         emph(next-page-content.at(0))
       }
       else if table-part-counter.get() != table-part-counter.final() {
-        v(-6pt)
+        v(-0.5em)
         emph(next-page-content.at(1))
       }
       else {
-        v(-6pt)
+        v(-0.5em)
         emph(next-page-content.last())
       }
     }
@@ -338,13 +342,14 @@
     table.cell(..table-args, stroke: none, align: center),
   ), supplement: [Таблица]) #if label-name != none {label-name}]
   v(-measure(next-page-content.last()).height)
+  v(-6pt)
 }
 
 #let simple-code(code-content, name, label: none) = {
   context [
     #let num = appendix-num(counter(heading).get().at(3)) + "." + str(counter("code").get().first() + 1)
   #next-page-code(
-    next-page-content: ([Листинг #num --- #name], [Продолжение Листинга #num], [Окончание Листинга #num]),
+    next-page-content: (par([#h(-4pt) Листинг #num --- #name], leading: 4pt), [Продолжение Листинга #num], [Окончание Листинга #num]),
     label,
     code-content
   )
@@ -357,9 +362,9 @@
     #let arr = counter(heading).get()
     #let num = arr.slice(0, 2).map(str).join(".") + "." + str(counter("table").get().first() + 1)
   #next-page-table(
-    next-page-content: ([Таблица #num --- #name], [Продолжение Таблицы #num]),
+    next-page-content: (par([Таблица #num --- #name], leading: 4pt), [Продолжение Таблицы #num]),
     label,
-    table(align: center, columns: if columns == none {header.len()} else {columns}, table.header(..header.map(text.with(weight: "bold")), repeat: false), ..table-content)
+    table(align: center, columns: if columns == none {header.len()} else {columns}, table.header(..header.map(text.with(weight: "bold")), repeat: false), ..table-content, stroke: luma(100))
   )
   ]
 }

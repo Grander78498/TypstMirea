@@ -26,21 +26,22 @@
     </terms>
   </locale>
   <macro name="editor">
-    <names variable="editor" delimiter="," prefix=", ">
-      <label prefix="" suffix=" "/>
+    <names variable="editor" delimiter="," prefix="/ ">
+      <label prefix="" suffix=""/>
       <name initialize-with=". "/>
     </names>
   </macro>
   <macro name="author">
-    <names variable="author" delimiter="," prefix=" / " suffix="">
+    <names variable="author" delimiter="," prefix="/ " suffix="">
       <name initialize-with="."/>
       <label form="long"/>
     </names>
   </macro>
   <macro name="access">
     <group>
-      <text value="[Электронный ресурс]. "/>
-      <text variable="URL" prefix="URL: "/>
+      <text value="[Электронный ресурс]"/>
+      <text variable="publisher" prefix=": "/>
+      <text variable="URL" prefix=". URL: "/>
       <group prefix=" (" suffix=").">
         <text term="accessed" suffix=": "/>
         <date variable="accessed">
@@ -84,7 +85,7 @@
       <name delimiter-precedes-last="always" initialize-with=". " name-as-sort-order="all" sort-separator=" " demote-non-dropping-particle="display-and-sort">
       <name-part name="family" suffix=","/>
       </name>
-      <label form="long" strip-periods="false" prefix=" " suffix="."/>
+      <label form="long" strip-periods="false" prefix="" suffix="."/>
     </names>
   </macro>
   <citation collapse="citation-number">
@@ -101,23 +102,22 @@
   </citation>
   <bibliography et-al-min="4" et-al-use-first="1">
     <sort>
-      <key macro="citation-number"/>
-      <key macro="language-sort"/>
+      <key macro="language-sort" sort="descending"/>
       <key macro="author-first"/>
+      <key macro="title"/>
       <key variable="issued"/>
     </sort>
     <layout suffix=".">
-      <text macro="citation-number" suffix="&#8194;  "/>
-      <text macro="author-first" suffix=" "/>
+      <text macro="citation-number" suffix=""/>
+      <text macro="author-first" suffix=""/>
       <choose>
         <if type="book" match="any">
           <group>
             <group delimiter=" ">
               <text macro="title"/>
-              <text macro="author"/>
               <text macro="editor"/>
               <text macro="translator"/>
-              <text variable="edition" prefix=" &#8212; " suffix="-е изд."/>
+              <text variable="edition" prefix=" &#8212;  " suffix="-е изд."/>
             </group>
             <text macro="publisher" prefix=" &#8212; "/>
             <text variable="number-of-pages" prefix=" &#8212; " suffix=" c."/>
@@ -131,7 +131,7 @@
               <text macro="editor"/>
             </group>
             <text macro="publisher" prefix=" "/>
-            <text variable="page" prefix="C. " suffix="."/>
+            <text variable="page" prefix=" C. " suffix="."/>
           </group>
         </else-if>
         <else-if type="webpage post-weblog" match="any">

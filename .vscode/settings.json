@@ -1,5 +1,5 @@
 {
     "pasteImage.path": "${projectRoot}/img",
     "pasteImage.namePrefix": "${currentFileNameWithoutExt}_",
-    "pasteImage.insertPattern": "#figure(image(\"img/${imageFileName}\"), caption: [])"
+    "pasteImage.insertPattern": "#figure(image(\"/img/${imageFileName}\"), caption: [])"
 }
