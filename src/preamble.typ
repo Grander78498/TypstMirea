@@ -10,21 +10,22 @@
 }
 
 #let print_symbols(..args) = {
-  [#h(-1.25cm) где]
-  context {
-    h(1.25cm - measure("где").width)
-  }
-  v(-26pt)
+  let res = []
   for (i, arg) in args.pos().enumerate() {
-    let res = [#arg];
+    res += arg;
     if i == args.pos().len() - 1 {
       res += "."
     }
     else {
       res += ";"
     }
-    par(res, hanging-indent: 1.25cm)
+    res += linebreak()
   }
+  set par(first-line-indent: (amount: 1.25cm, all: true), hanging-indent: 1.25cm)
+  [
+    #place(left, [где])
+    #par(res)
+  ]
 }
 
 #let appendix-num(.., last) = {
@@ -39,13 +40,16 @@
 }
 
 #let appendix() = {
-  outline(target: heading.where(level: 4), title: heading("Приложения", level: 1, outlined: true), fill: none)
+  outline(target: heading.where(level: 4), title: heading("Приложения", level: 1, outlined: true))
   counter(heading.where(level: 4)).update(0)
 }
 
 
 #let template(doc) = {
-  set par(first-line-indent: 1.25cm, justify: true, leading: 14pt)
+  set par(first-line-indent: (
+    amount: 1.25cm,
+    all: true
+  ), justify: true, leading: 14pt)
   show raw: it => {
     set par(leading: 4pt)
     set text(size: 10pt, font: "Courier New")
@@ -71,8 +75,6 @@
   show heading: set block(sticky: true)
   show heading: it => {
     if it.numbering != none {
-      v(-14pt)
-      h(1.25cm)
       context {
         let arr = counter(heading).get()
         if it.numbering == none {
@@ -94,24 +96,17 @@
     if it.body != [Приложения] {
       pagebreak()
     }
-    //if it.numbering != none { v(-12pt) }
     block(upper(text(it, size: 18pt)), sticky: true)
-    h(1.25cm)
-    v(-14pt)
   }
   show heading.where(level: 2): it => {
     v(30pt, weak: true)
     counter(math.equation).update(0)
     counter(figure.where(kind: image)).update(0)
     block(text(it, size: 16pt), sticky: true)
-    h(1.25cm)
-    v(-14pt)
   }
   show heading.where(level: 3): it => {
     v(30pt, weak: true)
     block(it, sticky: true)
-    h(1.25cm)
-    v(-14pt)
   }
   show heading.where(level: 4): it => {
     pagebreak()
@@ -129,6 +124,7 @@
 
   set list(indent: 1.25cm, body-indent: 1cm)
   show list: it => {
+    set par(first-line-indent: (amount: 1.25cm, all: true), hanging-indent: 2.25cm)
     for (index, item) in it.children.enumerate() {
       let res = it.marker.at(0) + h(1cm - 4pt) + item.body;
       if index == it.children.len() - 1 {
@@ -137,15 +133,13 @@
       else {
         res += ";";
       }
-      par(res, hanging-indent: 2.25cm)
+      par(res)
     }
   }
 
   set enum(indent: 1.25cm, body-indent: 1cm)
   show enum: it => {
     it
-    v(-18pt)
-    h(1.25cm)
   }
   
   show outline.entry: it => {
@@ -164,7 +158,7 @@
       }
     }
   }
-  
+  set outline(indent: 0cm)
   show outline: set outline(title: align(center, "Содержание"), 
                             target: selector(heading.where(level: 1))
                             .or(heading.where(level: 2))
@@ -193,14 +187,12 @@
     set par(leading: 4pt, justify: false)
     v(-12pt)
     [
-      Рисунок #arr.slice(0, 2).map(str).join(".").#counter(figure.where(kind: image)).get().first() --- #it.caption
+      Рисунок #arr.slice(0, 2).map(str).join(".").#counter(figure.where(kind: image)).get().first() --- #it.caption.body
     ]
     v(-6pt)
   }
   show figure.where(kind: table): it => {
     it
-    v(-1em)
-    h(1.25cm)
   }
   show figure.where(kind: table, supplement: [Листинг]): it => {
     it.body
@@ -233,7 +225,7 @@
     set text(font: "Cambria Math")
     v(24pt)
     it
-    h(1.25cm)
+    v(18pt)
   }
   
   doc
