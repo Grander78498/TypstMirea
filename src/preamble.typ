@@ -87,7 +87,7 @@
     else {
       align(center, it)
     }
-    v(12pt)
+    v(18pt)
   }
   set heading(numbering: "1.1")
   show heading.where(level: 1): it => {
@@ -150,11 +150,11 @@
       it
     }
     else {
-      h(1.25cm)
       context {
+        set par(justify: true)
         let app-num = counter(heading.where(level: 4)).get().first()
         counter(heading.where(level: 4)).step()
-        link(query(heading.where(level: 4)).at(app-num).location())[Приложение #appendix-num(app-num + 1) --- #it.element.body.]
+        par(link(query(heading.where(level: 4)).at(app-num).location())[Приложение #appendix-num(app-num + 1) --- #it.element.body.])
       }
     }
   }
@@ -223,11 +223,15 @@
   show math.equation.where(block: true): it => {
     set block(breakable: true)
     set text(font: "Cambria Math")
-    v(24pt)
+    linebreak()
     it
-    v(18pt)
+    linebreak()
   }
   
+  show bibliography: it => {
+    repr(it)
+    it
+  }
   doc
 }
 
@@ -338,6 +342,7 @@
 }
 
 #let simple-code(code-content, name, label: none) = {
+  set par(first-line-indent: 0cm)
   context [
     #let num = appendix-num(counter(heading).get().at(3)) + "." + str(counter("code").get().first() + 1)
   #next-page-code(
@@ -350,6 +355,7 @@
 
 #let simple-table(columns: none, name: "", label: none, header: none, ..table-content) = {
   v(-6pt)
+  set par(first-line-indent: 0cm)
   context [
     #let arr = counter(heading).get()
     #let num = arr.slice(0, 2).map(str).join(".") + "." + str(counter("table").get().first() + 1)

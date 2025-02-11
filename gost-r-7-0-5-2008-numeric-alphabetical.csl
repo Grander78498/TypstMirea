@@ -100,7 +100,7 @@
       </group>
     </layout>
   </citation>
-  <bibliography et-al-min="4" et-al-use-first="1">
+  <bibliography et-al-min="4" et-al-use-first="1" hanging-indent="true" second-field-align="margin">
     <sort>
       <key macro="language-sort" sort="descending"/>
       <key macro="author-first"/>
@@ -108,8 +108,8 @@
       <key variable="issued"/>
     </sort>
     <layout suffix=".">
-      <text macro="citation-number" suffix=""/>
-      <text macro="author-first" suffix=""/>
+      <text macro="citation-number" suffix=" "/>
+      <text macro="author-first" suffix=" "/>
       <choose>
         <if type="book" match="any">
           <group>
