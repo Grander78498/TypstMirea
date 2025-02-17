@@ -18,7 +18,7 @@
 #let titul(..it) = {
   
   figure(
-    image("../logo.jpg", height: 13%),
+    image("/src/logo.jpg", height: 13%),
   )
   set align(center)
   set par(leading: 6pt, spacing: 6pt)
