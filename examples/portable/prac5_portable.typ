@@ -189,7 +189,7 @@ $)
 // 
 
 #let app = [
-==== Реализация алгоритма пчелиной колонии на языке Python
+====== Реализация алгоритма пчелиной колонии на языке Python
 
 #simple-code(raw(read("/include/bee_algorithm.py")),
              "Реализация алгоритма пчелиной колонии",
@@ -207,7 +207,7 @@ $)
 
 
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 

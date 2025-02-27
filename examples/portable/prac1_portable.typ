@@ -139,7 +139,7 @@
 // 
 
 #let app = [
-==== Код реализации онтологии на языке Python
+====== Код реализации онтологии на языке Python
 
 #simple-code(raw(read("/include/prac1.py")),
              "Код файла main.py",
@@ -157,7 +157,7 @@
 
 
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 

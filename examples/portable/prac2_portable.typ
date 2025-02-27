@@ -227,7 +227,7 @@ $ g(x, x', T) = 1 / pi^D product_(i = 1)^D T / (abs(x' - x)^2 + T^2) $<cauchy>
 // 
 
 #let app = [
-==== Код реализации метода имитации отжига в задаче коммивояжёра на языке Python
+====== Код реализации метода имитации отжига в задаче коммивояжёра на языке Python
 
 #simple-code(raw(read("/include/generate.py")),
              "Код файла generate.py",
@@ -242,7 +242,7 @@ $ g(x, x', T) = 1 / pi^D product_(i = 1)^D T / (abs(x' - x)^2 + T^2) $<cauchy>
              label: <otzhig>)
 
 
-==== Код реализации метода имитации отжига в задаче оптимизации функции на языке Python
+====== Код реализации метода имитации отжига в задаче оптимизации функции на языке Python
 
 #simple-code(raw(read("/include/glob_min.py")),
              "Реализация метода имитации отжига",
@@ -260,7 +260,7 @@ $ g(x, x', T) = 1 / pi^D product_(i = 1)^D T / (abs(x' - x)^2 + T^2) $<cauchy>
 
 
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 

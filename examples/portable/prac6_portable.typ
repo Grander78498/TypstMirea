@@ -236,7 +236,7 @@ $)
 // 
 
 #let app = [
-==== Реализация электромагнитного алгоритма на языке Python
+====== Реализация электромагнитного алгоритма на языке Python
 
 #simple-code(raw(read("/include/electro.py")),
              "Реализация электромагнитного алгоритма",
@@ -254,7 +254,7 @@ $)
 
 
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 

@@ -199,7 +199,7 @@ f_3 (2)=52.27$)
 // 
 
 #let app = [
-==== Реализация роевого алгоритма в задаче оптимизации на языке Python
+====== Реализация роевого алгоритма в задаче оптимизации на языке Python
 
 #simple-code(raw(read("/include/swarm.py")),
              "Реализация роевого алгоритма",
@@ -217,7 +217,7 @@ f_3 (2)=52.27$)
 
 
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 
