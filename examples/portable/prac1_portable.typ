@@ -139,7 +139,7 @@
 // 
 
 #let app = [
-==== Код реализации онтологии на языке Python
+====== Код реализации онтологии на языке Python
 
 #simple-code(raw(read("/include/prac1.py")),
              "Код файла main.py",

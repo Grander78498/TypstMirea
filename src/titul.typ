@@ -22,10 +22,17 @@
   )
   set align(center)
   set par(leading: 6pt, spacing: 6pt)
-  "МИНОБРНАУКИ РОССИИ
-  Федеральное государственное бюджетное образовательное учреждение высшего образования\n"
+
+  [
+  МИНОБРНАУКИ РОССИИ
+
+  Федеральное государственное бюджетное образовательное учреждение высшего образования
   
-  text(weight: "black", quoted("МИРЭА - Российский технологический университет") + "\nРТУ МИРЭА")
+  ]
+  
+  [*"МИРЭА - Российский технологический университет"*
+  
+  *РТУ МИРЭА*]
   line(length: 95%)
   v(-3.5pt)
   line(length: 95%)
@@ -34,35 +41,35 @@
   linebreak()
   
   
-  text(weight: "black", "Институт ") 
-  it.named().Институт
-  linebreak()
+  [*Институт * #it.named().Институт #linebreak()]
   
-  text(weight: "black", "Кафедра ") 
-  it.named().Кафедра
+  [*Кафедра * #it.named().Кафедра]
   
   linebreak()
   linebreak()
   
-  text(weight: "black", it.named().Практика)
+  [*#it.named().Практика*]
 
   linebreak()
+  linebreak()
 
-  text(weight: "black", "\nпо дисциплине\n" + it.named().Дисциплина)
+  [
+    *по дисциплине*
+
+    *#it.named().Дисциплина*
+  ]
   
   v(60pt)
   
   grid(columns: (65%, 35%), align:(left, center), stroke: none, inset: (y: 3pt),
-  grid.cell(rowspan: 2, [Студент группы: #underline[#it.named().Группа]]),
-  [#underline[#it.named().Студент]],
-  [_(Ф.И.О. студента)_])
+  grid.cell(rowspan: 2, [Студент группы #it.named().Группа]),
+  underline[#it.named().Студент], [_(Ф.И.О. студента)_])
 
   v(36pt)
   
   grid(columns: (65%, 35%), align:(left, center), stroke: none, inset: (y: 3pt),
   grid.cell(rowspan: 2, [Принял #it.named().at("Должность", default: "")]),
-  [#underline[#it.named().Преподаватель]],
-  [_(Ф.И.О. преподавателя)_])
+  underline[#it.named().Преподаватель], [_(Ф.И.О. преподавателя)_])
   
-  align(bottom, [Москва 2024])
+  align(bottom, [Москва #datetime.today().year()])
 }
