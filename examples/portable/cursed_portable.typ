@@ -49,7 +49,7 @@
 
 Все описанные алгоритмы реализованы на языке Python для решения задачи коммивояжёра в произвольном графе и нахождения глобального минимума функции Растригина, которая примечательна наличием большого количества локальных минимумов.
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 

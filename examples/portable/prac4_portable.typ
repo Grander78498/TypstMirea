@@ -73,7 +73,7 @@ $ tau_(i j) (t)=(1-rho) tau_(i j) (t) " ," $<pher-vapor>
 $ tau_(i j) (t + 1) = t_(i j) (t) + sum_(k=1)^(n_k) Delta tau_(i j) (t) $<pher-update>
 
 #print_symbols(
-  [#v(12pt) #eq-simple($ Delta tau_(i j)^k (t) = cases(
+  [#linebreak() #eq-simple($ Delta tau_(i j)^k (t) = cases(
     Q / L^k (t) &", если дуга " (i, j) " есть в пути " x^k (t),
     0 &", иначе"
   )$) --- изменение количества феромона в зависимости от длины пройденного пути],
@@ -486,7 +486,7 @@ $)
 
 
 
-#bibliography("/authors.bib", style: "/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
+#bibliography("/authors.bib", style: "/src/gost-r-7-0-5-2008-numeric-alphabetical.csl", title: "Список использованных источников", full: true)
 
 #appendix()
 
